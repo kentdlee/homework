@@ -6,7 +6,7 @@ directory is where you would write and organize your code. The test
 directory is where to write test programs to test your code. When
 you compile your code, binaries can be placed in src/bin for access
 from the test directory. For interpreted code, the src directory itself
-is in the PATH for access from the test directory.
+is in the PATH/PYTHONPATH/CLASSPATH for access from the test directory.
 
 If you are new to containers, then you will need to download Docker and
 install it on your computer.
