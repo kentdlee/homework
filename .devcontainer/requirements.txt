@@ -1,0 +1,12 @@
+# TODO Specify minimum version requirements?
+breathe
+cloudpickle
+cryptography
+Cython
+parameterized
+PyYAML
+Sphinx
+wheel
+numpy
+black
+sphinx-rtd-theme

@@ -1,0 +1,38 @@
+{
+    "build": {
+        "dockerfile": "Dockerfile"
+    },
+    "runArgs": [
+        "--shm-size=4gb" // std 64mb (!) are not enough
+        // "--cpus=4",
+        // "-m 4gb"
+    ],
+    "settings": {
+        "terminal.integrated.profiles.linux": {
+            "bash (login)": {
+                "path": "/bin/bash",
+                "args": [
+                    "-li"
+                ]
+            }
+        },
+        "terminal.integrated.defaultProfile.linux": "bash (login)"
+    },
+    "postStartCommand": [
+        "/usr/bin/git",
+        "-C",
+        "${containerWorkspaceFolder}",
+        "status"
+    ],
+    "extensions": [
+        "donjayamanne.git-extension-pack",
+        "mhutchie.git-graph",
+        "ms-python.python",
+        "ms-vscode.cpptools",
+        "ms-vscode.cpptools-extension-pack",
+        "ms-vscode.cpptools-themes"
+    ]
+    // Uncomment if you set up vscode in Dockerfile and want
+    // to run as non-root vscode in devcontainer
+    // "remoteUser": "vscode"
+}
