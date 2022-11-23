@@ -9,7 +9,11 @@ from the test directory. For interpreted code, the src directory itself
 is in the PATH for access from the test directory.
 
 If you are new to containers, then you will need to download Docker and
-install it on your computer. If you are running Windows, you'll also need to
+install it on your computer.
+
+https://www.docker.com/
+
+If you are running Windows, you'll also need to
 enable the WSL 2 feature on Windows. You can read about how to do that by
 going to this web address.
 
