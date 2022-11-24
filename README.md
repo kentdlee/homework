@@ -49,4 +49,4 @@ well) is PyCharm.
 https://www.jetbrains.com/pycharm/
 
 These products are endorsed with no monetary incentive. They are just tools
-I have found to be useful and are commonly used in professional circles.
+found to be useful and are commonly used in professional circles.
