@@ -20,7 +20,8 @@ going to this web address.
 https://docs.docker.com/desktop/install/windows-install/
 
 Once you have done that, clone this repository on your system. You may need to
-install GIT to do that. Instructions can be found here.
+install GIT to do that. Instructions can be found here. Otherwise, you can
+download the zip file found under the Code dropdown menu on the github page.
 
 https://git-scm.com/download/mac
 
@@ -33,20 +34,6 @@ containers very painless. Other environments are possible, but Studio Code
 is recommended.
 
 https://code.visualstudio.com/
-
-For beginners writing Python code, you may want to get Wingware's Wing IDE.
-This can be found at this web address.
-
-https://wingware.com/
-
-The free version, Wing 101, is sufficient for most student users. Educational
-users can purchase the personal or pro versions at a reduced price, but the
-free 101 version is very good.
-
-Another very good environment for writing Python code (and other languages as
-well) is PyCharm.
-
-https://www.jetbrains.com/pycharm/
 
 These products are endorsed with no monetary incentive. They are just tools
 found to be useful and are commonly used in professional circles.
