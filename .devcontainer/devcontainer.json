@@ -18,13 +18,18 @@
         },
         "terminal.integrated.defaultProfile.linux": "bash (login)"
     },
-    "postStartCommand": [
-        "git config --global --add safe.directory /workspaces/homework &&"
-        "/usr/bin/git",
-        "-C",
-        "${containerWorkspaceFolder}",
-        "status"
-    ],
+    "postStartCommand": {
+        "dir": [
+          "/usr/bin/git", "config", "--global",
+          "--add", "safe.directory", "/workspaces/homework"
+        ],
+        "git": [
+          "/usr/bin/git",
+          "-C",
+          "${containerWorkspaceFolder}",
+          "status"
+        ] 
+    },
     "extensions": [
         "donjayamanne.git-extension-pack",
         "mhutchie.git-graph",
