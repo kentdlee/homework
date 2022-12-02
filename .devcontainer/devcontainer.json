@@ -19,6 +19,7 @@
         "terminal.integrated.defaultProfile.linux": "bash (login)"
     },
     "postStartCommand": [
+        "git config --global --add safe.directory /workspaces/homework &&"
         "/usr/bin/git",
         "-C",
         "${containerWorkspaceFolder}",

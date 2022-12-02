@@ -85,8 +85,6 @@ RUN apt-get update \
     libdw-dev libiberty-dev libacl1-dev \
     && rm -rf /var/lib/apt/lists/*
 
-RUN git config --global --add safe.directory /workspaces/homework
-
 # Run script to allow non-root vscode user to map to your own uid
 # by replacing uid with your own (result of `id -u <username>`)
 # on host system
