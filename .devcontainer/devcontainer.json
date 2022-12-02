@@ -23,7 +23,6 @@
           "/usr/bin/git", "config", "--global",
           "--add", "safe.directory", "${containerWorkspaceFolder}"
         ],
-        "reset": [ "/usr/bin/git", "reset", "--hard", "@"],
         "git": [
           "/usr/bin/git",
           "-C",
