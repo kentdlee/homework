@@ -21,14 +21,15 @@
     "postStartCommand": {
         "dir": [
           "/usr/bin/git", "config", "--global",
-          "--add", "safe.directory", "/workspaces/homework"
+          "--add", "safe.directory", "${containerWorkspaceFolder}"
         ],
+        "reset": [ "/usr/bin/git", "reset", "--hard", "@"],
         "git": [
           "/usr/bin/git",
           "-C",
           "${containerWorkspaceFolder}",
           "status"
-        ] 
+        ]
     },
     "extensions": [
         "donjayamanne.git-extension-pack",
