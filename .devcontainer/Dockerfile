@@ -55,10 +55,8 @@ RUN cat /tmp/git_completion.bash >> ~/.bashrc
 
 # Install SRMStoFigs
 RUN curl -sSfL https://github.com/kentdlee/SRMStoFigs/archive/refs/heads/master.tar.gz | tar -xz -C /usr/local/src
-COPY srms.patch /usr/local/src/SRMStoFigs-master/
 RUN cd /usr/local/src/SRMStoFigs-master \
     && make -B srmstofigs CC=gcc \
-    && git apply srms.patch \
     && install -D -m 755 srmstofigs srms2pdf srms2png /usr/local/bin
 
 # Additional packages for convenience
