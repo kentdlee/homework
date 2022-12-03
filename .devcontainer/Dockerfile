@@ -54,8 +54,8 @@ COPY git_completion.bash /tmp/git_completion.bash
 RUN cat /tmp/git_completion.bash >> ~/.bashrc
 
 # Install SRMStoFigs
-RUN curl -sSfL https://github.com/kentdlee/SRMStoFigs/archive/refs/heads/master.tar.gz | tar -xz -C /usr/local/src
-RUN cd /usr/local/src/SRMStoFigs-master \
+RUN cd /usr/local/src && git clone git@github.com:kentdlee/homework.git
+RUN cd /usr/local/src/SRMStoFigs \
     && make -B srmstofigs CC=gcc \
     && install -D -m 755 srmstofigs srms2pdf srms2png /usr/local/bin
 
