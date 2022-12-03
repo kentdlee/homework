@@ -54,7 +54,7 @@ COPY git_completion.bash /tmp/git_completion.bash
 RUN cat /tmp/git_completion.bash >> ~/.bashrc
 
 # Install SRMStoFigs
-RUN cd /usr/local/src && git@github.com:kentdlee/SRMStoFigs.git
+RUN cd /usr/local/src && git clone git@github.com:kentdlee/SRMStoFigs.git
 RUN cd /usr/local/src/SRMStoFigs \
     && make -B srmstofigs CC=gcc \
     && install -D -m 755 srmstofigs srms2pdf srms2png /usr/local/bin
