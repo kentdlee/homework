@@ -22,12 +22,6 @@
         "dir": [
           "/usr/bin/git", "config", "--global",
           "--add", "safe.directory", "${containerWorkspaceFolder}"
-        ],
-        "git": [
-          "/usr/bin/git",
-          "-C",
-          "${containerWorkspaceFolder}",
-          "status"
         ]
     },
     "extensions": [
