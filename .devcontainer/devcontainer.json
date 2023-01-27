@@ -3,7 +3,11 @@
         "dockerfile": "Dockerfile"
     },
     "runArgs": [
-        "--shm-size=4gb" // std 64mb (!) are not enough
+        "--shm-size=4gb",
+        "--ulimit",
+        "core=-1",
+        "--cap-add=SYS_PTRACE",
+        "--privileged"
         // "--cpus=4",
         // "-m 4gb"
     ],
@@ -19,6 +23,7 @@
         "terminal.integrated.defaultProfile.linux": "bash (login)"
     },
     "postStartCommand": {
+        "cores" : [ "echo", "'core.%e.%p'", "|", "sudo", "tee", "/proc/sys/kernel/core_pattern" ],
         "dir": [
           "/usr/bin/git", "config", "--global",
           "--add", "safe.directory", "${containerWorkspaceFolder}"
