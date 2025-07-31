@@ -2,12 +2,6 @@ FROM mcr.microsoft.com/vscode/devcontainers/base:ubuntu-22.04
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-ENV PATH=/workspaces/homework/src/bin:$PATH
-
-ENV PYTHONPATH=/workspaces/homework/src:$PYTHONPATH
-
-ENV CLASSPATH=/workspaces/home/src:$CLASSPATH
-
 # Required packages for building Python via pyenv, see https://github.com/pyenv/pyenv/wiki#suggested-build-environment
 RUN apt-get update \
     && export DEBIAN_FRONTEND=noninteractive \
@@ -25,8 +19,8 @@ RUN git clone https://github.com/pyenv/pyenv.git $PYENV_ROOT
 # Compile dynamic bash extension to speed up pyenv
 RUN cd $PYENV_ROOT && src/configure && make -C src
 
-# Build Python 3.9.4 by default.
-ARG python_version=3.9.4
+# Build Python 3.11.2 by default.
+ARG python_version=3.11.2
 # Keep Python source files in /usr/local/src
 ENV PYTHON_BUILD_BUILD_PATH=/usr/local/src/
 # Install a Python with a shared object
@@ -35,10 +29,10 @@ ENV PYTHON_CONFIGURE_OPTS="--enable-shared"
 RUN /opt/pyenv/plugins/python-build/bin/python-build --verbose --keep ${python_version} /usr/local \
     && rm -fr /usr/local/src/Python-${python_version}.tar.*
 
-# Install development tools
+# Install development tools required by Dragon
 RUN apt-get update \
     && export DEBIAN_FRONTEND=noninteractive \
-    && apt-get install -y default-jdk doxygen git openssl sudo unzip util-linux \
+    && apt-get install -y default-jdk doxygen git openssl sudo unzip util-linux clang-format \
     && rm -rf /var/lib/apt/lists/*
 
 # Install SRMStoFigs dependencies
@@ -53,7 +47,7 @@ RUN curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git
 COPY git_completion.bash /tmp/git_completion.bash
 RUN cat /tmp/git_completion.bash >> ~/.bashrc
 
-# Install SRMStoFigs
+# Install SRMStoFigs (required to build Dragon docs)
 RUN cd /usr/local/src && git clone https://github.com/kentdlee/SRMStoFigs.git
 RUN cd /usr/local/src/SRMStoFigs \
     && make -B srmstofigs CC=gcc \
@@ -63,20 +57,20 @@ RUN cd /usr/local/src/SRMStoFigs \
 RUN apt-get update \
     && export DEBIAN_FRONTEND=noninteractive \
     && apt-get install -y \
-    debianutils environment-modules gdb git-lfs git-man graphviz man \
+    debianutils gdb git-lfs git-man graphviz man \
     manpages manpages-dev manpages-posix manpages-posix-dev ssh psmisc \
     rsync sshpass tree vim xfsprogs \
     && rm -rf /var/lib/apt/lists/*
 
-# Python packages
+# Python packages required by Dragon
 COPY requirements.txt /usr/src/requirements.txt
-COPY constraints.txt /usr/src/constraints.txt
 
+# Zarr/numcodecs requires special attention to work around a bug in numcodecs (w/o going to the latest Zarr)
 RUN /usr/local/bin/python3 -m ensurepip \
     && /usr/local/bin/python3 -m pip install --no-cache-dir --upgrade pip \
-    && /usr/local/bin/python3 -m pip install --no-cache-dir -r /usr/src/requirements.txt -c /usr/src/constraints.txt
+    && /usr/local/bin/python3 -m pip install --no-cache-dir -r /usr/src/requirements.txt
 
-# Additional Packages
+# Packages for building dragon multinode dependencies
 RUN apt-get update \
     && export DEBIAN_FRONTEND=noninteractive \
     && apt-get install -y \
@@ -85,6 +79,7 @@ RUN apt-get update \
     libdw-dev libiberty-dev libacl1-dev \
     && rm -rf /var/lib/apt/lists/*
 
+
 # Run script to allow non-root vscode user to map to your own uid
 # by replacing uid with your own (result of `id -u <username>`)
 # on host system
@@ -92,3 +87,6 @@ RUN apt-get update \
 #  RUN apt-get update \
 #       && bash /tmp/library-scripts/common-debian.sh false vscode \
 #                uid automatic false false false
+
+# We must expose a port to run the Jupyter Notebook example.
+EXPOSE 8888

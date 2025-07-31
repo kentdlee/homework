@@ -3,14 +3,17 @@
         "dockerfile": "Dockerfile"
     },
     "runArgs": [
-        "--shm-size=4gb",
-        "--ulimit",
-        "core=-1",
-        "--cap-add=SYS_PTRACE",
-        "--privileged"
-        // "--cpus=4",
-        // "-m 4gb"
+        "--privileged", // so gdb can attach to processes
+        "--ulimit", // These two lines allow core files in the container.
+        "core=-1", // Helpful in debugging.
+        "--shm-size=6gb", // 4GB user pool, 1GB inf pool, 1GB extra pool
+        "--cpus=2", // explicit hard limits for CPUs and mem
+        "--memory=8GB",
+        "--cap-add=SYS_PTRACE"
     ],
+    "onCreateCommand": [],
+    // remove the slow git status from the prompt.
+    "postStartCommand": "git config codespaces-theme.hide-status 1",
     "settings": {
         "terminal.integrated.profiles.linux": {
             "bash (login)": {
@@ -22,20 +25,15 @@
         },
         "terminal.integrated.defaultProfile.linux": "bash (login)"
     },
-    "postStartCommand": {
-        "cores" : [ "echo", "'core.%e.%p'", "|", "sudo", "tee", "/proc/sys/kernel/core_pattern" ],
-        "dir": [
-          "/usr/bin/git", "config", "--global",
-          "--add", "safe.directory", "${containerWorkspaceFolder}"
-        ]
-    },
     "extensions": [
         "donjayamanne.git-extension-pack",
         "mhutchie.git-graph",
         "ms-python.python",
         "ms-vscode.cpptools",
         "ms-vscode.cpptools-extension-pack",
-        "ms-vscode.cpptools-themes"
+        "ms-vscode.cpptools-themes",
+        "njpwerner.autodocstring", // allow automatic docstrings in Python
+        "jebbs.plantuml" // support .puml UML diagrams for the docs
     ]
     // Uncomment if you set up vscode in Dockerfile and want
     // to run as non-root vscode in devcontainer
